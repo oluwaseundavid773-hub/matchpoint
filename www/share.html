@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MatchPoint - Share & Earn / Viral Network</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50/50 text-gray-800 font-sans antialiased min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
+
+    <!-- Navigation Header -->
+    <header class="bg-white/80 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <a href="index.html" class="text-2xl font-black text-indigo-600 tracking-wider">MATCHPOINT</a>
+            </div>
+            <nav class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="index.html" class="text-gray-600 hover:text-indigo-600 transition">Home</a>
+                <a href="browse.html" class="text-gray-600 hover:text-indigo-600 transition">Browse</a>
+                <a href="promote.html" class="text-gray-600 hover:text-indigo-600 transition">Promote</a>
+                <a href="share.html" class="text-indigo-600 font-semibold">Share & Earn</a>
+                <a href="register.html" class="text-gray-600 hover:text-indigo-600 transition">Register Business</a>
+                <a href="profile.html" class="text-gray-600 hover:text-indigo-600 transition">Profile</a>
+            </nav>
+            <div>
+                <a href="register.html" class="bg-indigo-600 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-sm hover:bg-indigo-700 transition">Get Started</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+        
+        <!-- Hero Box -->
+        <div class="bg-gradient-to-br from-emerald-900 via-teal-900 to-slate-900 text-white rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden text-center max-w-4xl mx-auto mb-12">
+            <div class="absolute -right-12 -top-12 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl"></div>
+            <span class="bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-wider">
+                🎁 Share & Grow Together
+            </span>
+            <h1 class="text-3xl sm:text-5xl font-black tracking-tight mt-4">Help Local Businesses Get Discovered & Earn Boost Perks!</h1>
+            <p class="text-emerald-100/80 text-base sm:text-lg mt-4 max-w-2xl mx-auto leading-relaxed">
+                Know a vendor, artisan, or skilled service provider? Share MatchPoint on WhatsApp or social media to help them get clients directly!
+            </p>
+
+            <!-- Instant Share Buttons -->
+            <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <button onclick="shareOnWhatsApp()" class="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold px-8 py-4 rounded-2xl shadow-lg transition text-base flex items-center justify-center gap-2 cursor-pointer">
+                    <i class="fa-brands fa-whatsapp text-xl"></i> Share to WhatsApp Status / Groups
+                </button>
+            </div>
+        </div>
+
+        <!-- Quick Copy Link Generator -->
+        <div class="max-w-2xl mx-auto bg-white border border-gray-100 p-8 rounded-3xl shadow-sm mb-12">
+            <h3 class="text-xl font-black text-gray-900 mb-2">Copy MatchPoint Invite Link</h3>
+            <p class="text-gray-500 text-xs mb-4">Paste this link into your statuses, broadcast messages, or social posts.</p>
+            
+            <div class="flex items-center gap-2 bg-gray-50 border border-gray-200 p-2 rounded-2xl">
+                <input type="text" id="shareUrl" readonly value="https://matchpoint.ng" class="bg-transparent text-sm font-semibold text-gray-700 px-3 w-full focus:outline-none">
+                <button onclick="copyShareLink()" id="copyBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-5 py-3 rounded-xl transition flex-shrink-0 cursor-pointer">
+                    Copy Link
+                </button>
+            </div>
+        </div>
+
+        <!-- Pre-written WhatsApp Templates -->
+        <div class="max-w-4xl mx-auto mb-12">
+            <h2 class="text-2xl font-black text-gray-900 text-center mb-8">Ready-To-Use Promo Templates</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Template 1: For Vendors -->
+                <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-xs flex flex-col justify-between">
+                    <div>
+                        <span class="bg-indigo-50 text-indigo-700 text-[10px] font-black px-2.5 py-1 rounded-full uppercase">For Vendors & Artisans</span>
+                        <h4 class="font-bold text-gray-900 text-base mt-3">Target: Business Owners</h4>
+                        <blockquote class="bg-gray-50 border-l-4 border-indigo-600 p-4 rounded-r-xl text-xs text-gray-600 italic my-4 leading-relaxed">
+                            "Hey! If you offer services or run a business, get listed on MatchPoint so clients can find you and chat with you directly on WhatsApp! 🚀 Check it out: https://matchpoint.ng"
+                        </blockquote>
+                    </div>
+                    <button onclick="copyTemplate(`Hey! If you offer services or run a business, get listed on MatchPoint so clients can find you and chat with you directly on WhatsApp! 🚀 Check it out: https://matchpoint.ng`)" class="bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">
+                        <i class="fa-regular fa-copy mr-1"></i> Copy Message Text
+                    </button>
+                </div>
+
+                <!-- Template 2: For Service Seekers -->
+                <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-xs flex flex-col justify-between">
+                    <div>
+                        <span class="bg-emerald-50 text-emerald-700 text-[10px] font-black px-2.5 py-1 rounded-full uppercase">For Buyers & Clients</span>
+                        <h4 class="font-bold text-gray-900 text-base mt-3">Target: General Community</h4>
+                        <blockquote class="bg-gray-50 border-l-4 border-emerald-600 p-4 rounded-r-xl text-xs text-gray-600 italic my-4 leading-relaxed">
+                            "Need a braider, tech expert, or caterer near you? Or have a request? Post on MatchPoint and verified experts will message you instantly! 🔥 Check it out: https://matchpoint.ng"
+                        </blockquote>
+                    </div>
+                    <button onclick="copyTemplate(`Need a braider, tech expert, or caterer near you? Or have a request? Post on MatchPoint and verified experts will message you instantly! 🔥 Check it out: https://matchpoint.ng`)" class="bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">
+                        <i class="fa-regular fa-copy mr-1"></i> Copy Message Text
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-100 py-8 text-center text-gray-500 text-sm mt-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>&copy; 2026 MatchPoint. All rights reserved. Built for seamless connection.</p>
+        </div>
+    </footer>
+
+    <!-- App Logic Scripts -->
+    <script>
+        // Set your preferred live domain URL here
+        const LIVE_URL = "https://matchpoint.ng";
+
+        // Pre-fill link box on page load
+        document.getElementById('shareUrl').value = LIVE_URL;
+
+        function shareOnWhatsApp() {
+            const text = encodeURIComponent(`Need trusted services or want to promote your business? Join MatchPoint to get direct WhatsApp connections! 🚀 Check it out here: ${LIVE_URL}`);
+            window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+        }
+
+        function copyShareLink() {
+            const shareInput = document.getElementById('shareUrl');
+            shareInput.select();
+            document.execCommand('copy');
+
+            const btn = document.getElementById('copyBtn');
+            btn.innerText = "Copied! ✅";
+            btn.className = "bg-emerald-600 text-white font-bold text-xs px-5 py-3 rounded-xl transition flex-shrink-0";
+            
+            setTimeout(() => {
+                btn.innerText = "Copy Link";
+                btn.className = "bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-5 py-3 rounded-xl transition flex-shrink-0";
+            }, 2000);
+        }
+
+        function copyTemplate(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert("Promo message copied to clipboard! Paste it anywhere on WhatsApp or social media.");
+            });
+        }
+    </script>
+</body>
+</html>

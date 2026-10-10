@@ -1,0 +1,892 @@
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MatchPoint - Directory & Marketplace</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50/50 text-gray-800 font-sans antialiased min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
+
+    <!-- Navigation Header with Glassmorphism -->
+    <header class="bg-white/80 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <a href="index.html" class="text-2xl font-black text-indigo-600 tracking-wider">MATCHPOINT</a>
+            </div>
+            <nav class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="index.html" class="text-gray-600 hover:text-indigo-600 transition">Home</a>
+                <a href="browse.html" class="text-indigo-600 font-semibold">Browse</a>
+                <a href="promote.html" class="text-gray-600 hover:text-indigo-600 transition">Promote</a>
+                <a href="share.html" class="text-gray-600 hover:text-indigo-600 transition">Share & Earn</a>
+                <a href="register.html" class="text-gray-600 hover:text-indigo-600 transition">Register Business</a>
+                <a href="profile.html" class="text-gray-600 hover:text-indigo-600 transition">Profile</a>
+            </nav>
+            <div class="flex items-center gap-3">
+                <button onclick="openActivationModal()" class="bg-amber-400 hover:bg-amber-300 text-slate-950 font-black px-3.5 py-2 rounded-xl text-xs shadow-sm transition cursor-pointer flex items-center gap-1.5">
+                    🔑 Enter Pass Key
+                </button>
+                <a href="register.html" class="bg-indigo-600 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-sm hover:bg-indigo-700 transition hidden sm:inline-block">Get Started</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+        
+        <!-- Page Title & Tab Switcher -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+            <div>
+                <h1 class="text-3xl font-black text-gray-900 tracking-tight">MatchPoint Directory</h1>
+                <p class="text-gray-500 text-sm mt-1">Discover verified vendors or connect with community peers instantly.</p>
+            </div>
+            <!-- Section Switcher Tabs -->
+            <div class="flex bg-gray-200/70 p-1.5 rounded-2xl w-max shadow-inner">
+                <button onclick="switchTab('vendors')" id="btn-vendors" class="bg-white text-indigo-600 font-bold px-5 py-2.5 rounded-xl shadow-xs text-sm transition cursor-pointer">
+                    🌟 Verified Vendors
+                </button>
+                <button onclick="switchTab('community')" id="btn-community" class="text-gray-600 font-semibold px-5 py-2.5 rounded-xl text-sm transition hover:text-gray-900 cursor-pointer">
+                    🤝 Community Contacts
+                </button>
+            </div>
+        </div>
+
+        <!-- REQUEST NOTICEBOARD SECTION -->
+        <div class="bg-gradient-to-r from-slate-900 to-indigo-950 text-white p-6 sm:p-8 rounded-3xl shadow-xl mb-10 relative overflow-hidden">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
+                <div>
+                    <span class="bg-indigo-500/30 border border-indigo-400/30 text-indigo-200 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                        ⚡ Instant Marketplace
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl font-black mt-2 tracking-tight">Need a quick service or item?</h2>
+                    <p class="text-indigo-200/80 text-sm mt-1 max-w-lg">
+                        Post your request and let verified vendors and community experts reach out to you directly on WhatsApp!
+                    </p>
+                </div>
+                <button onclick="openRequestModal()" class="bg-amber-400 hover:bg-amber-300 text-slate-950 font-black px-6 py-3.5 rounded-xl shadow-lg transition text-sm flex-shrink-0 flex items-center cursor-pointer">
+                    <i class="fa-solid fa-paper-plane mr-2"></i> Post "I Need A..." Request
+                </button>
+            </div>
+
+            <!-- Live Requests Grid & Real-time Counter Header -->
+            <div class="mt-8 pt-8 border-t border-white/10">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xs font-bold text-indigo-300 uppercase tracking-wider flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Active Community Requests
+                    </h3>
+                    <!-- Real-Time Counter Badge -->
+                    <span id="requestCountBadge" class="bg-amber-400/20 text-amber-300 border border-amber-400/30 text-[11px] font-extrabold px-3 py-1 rounded-full flex items-center gap-1.5 shadow-xs">
+                        <i class="fa-solid fa-fire text-amber-400 text-xs"></i> <span id="requestCount">0</span> Active
+                    </span>
+                </div>
+                <div id="requestsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <p class="text-indigo-300/60 text-xs col-span-full py-4">Loading active requests...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- DEALS & OFFERS SPOTLIGHT SECTION -->
+        <div class="mb-12">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
+                <div>
+                    <span class="bg-red-50 text-red-600 border border-red-100 text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider">
+                        🔥 Hot Deals & Flash Discounts
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl font-black text-gray-900 tracking-tight mt-1">Vendor Deal Spotlight</h2>
+                    <p class="text-gray-500 text-sm">Grab exclusive discounts offered directly by verified MatchPoint vendors.</p>
+                </div>
+                <button onclick="openDealModal()" class="bg-red-600 hover:bg-red-700 text-white font-bold px-5 py-2.5 rounded-xl shadow-md transition text-sm flex items-center gap-2 cursor-pointer w-max">
+                    <i class="fa-solid fa-tag"></i> Post A Deal (Vendors)
+                </button>
+            </div>
+
+            <!-- Deals Grid -->
+            <div id="dealsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <p class="text-gray-400 text-sm col-span-full text-center py-8">Loading live deals...</p>
+            </div>
+        </div>
+
+        <!-- SECTION 1: VERIFIED VENDORS MARKETPLACE -->
+        <div id="section-vendors" class="space-y-6">
+            <div class="bg-gradient-to-r from-indigo-900 via-indigo-800 to-indigo-900 text-white p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 mb-8 relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-white/5 rounded-full blur-2xl pointer-events-none"></div>
+                <div class="relative z-10">
+                    <span class="bg-indigo-500/30 border border-indigo-400/20 text-indigo-200 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">Elite Marketplace</span>
+                    <h2 class="text-2xl sm:text-3xl font-black mt-2 tracking-tight">Looking for heavy sales and trusted services?</h2>
+                    <p class="text-indigo-200/90 text-sm mt-1 max-w-xl">Explore our fully verified ₦10,000 tier vendors equipped with full profiles and direct booking.</p>
+                </div>
+                <a href="register.html" class="bg-white text-indigo-900 font-bold px-6 py-3 rounded-xl shadow-md hover:bg-indigo-50 transition text-sm flex-shrink-0 relative z-10">
+                    List Your Business (₦10k)
+                </a>
+            </div>
+            
+            <!-- Vendors Grid -->
+            <div id="verifiedVendorsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="col-span-full text-center py-12 text-gray-400 text-sm">Loading verified vendors...</div>
+            </div>
+        </div>
+
+        <!-- SECTION 2: COMMUNITY CONTACT POOL -->
+        <div id="section-community" class="space-y-6 hidden">
+            <div class="bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-100/80 text-emerald-900 p-6 sm:p-8 rounded-3xl shadow-sm flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
+                <div>
+                    <span class="bg-emerald-200/70 border border-emerald-300/50 text-emerald-800 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">Free Network Pool</span>
+                    <h2 class="text-2xl sm:text-3xl font-black mt-2 tracking-tight">Connect, chat, and build your contact list!</h2>
+                    <p class="text-emerald-700 text-sm mt-1 max-w-xl">Browse community WhatsApp handles or add your own details to get discovered.</p>
+                </div>
+                <button onclick="openModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-3 rounded-xl shadow-md transition text-sm flex-shrink-0 flex items-center cursor-pointer">
+                    <i class="fa-brands fa-whatsapp mr-2 text-lg"></i> Add Your Contact
+                </button>
+            </div>
+
+            <!-- Dynamic Community Contacts Grid -->
+            <div id="community-contacts-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="col-span-full text-center py-12 text-gray-400 text-sm">Loading community contacts...</div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ADD CONTACT MODAL FORM -->
+    <div id="contact-modal" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl relative animate-in fade-in zoom-in duration-200">
+            <button onclick="closeModal()" class="absolute top-6 right-6 text-gray-400 hover:text-gray-600 text-lg cursor-pointer">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="text-xl font-black text-gray-900 mb-1">Join Community Pool</h3>
+            <p class="text-gray-500 text-xs mb-6">Fill in your details to appear instantly on the live directory.</p>
+            
+            <form id="add-contact-form" onsubmit="submitContact(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Full Name</label>
+                    <input type="text" id="form-name" required placeholder="e.g. John David" class="w-full bg-gray-50 rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-emerald-600 transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Role / Skill</label>
+                    <input type="text" id="form-role" required placeholder="e.g. Student • Graphic Designer" class="w-full bg-gray-50 rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-emerald-600 transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">WhatsApp Phone Number</label>
+                    <input type="text" id="form-whatsapp" required placeholder="e.g. 2348012345678" class="w-full bg-gray-50 rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-emerald-600 transition">
+                </div>
+                <button type="submit" id="submit-btn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl transition text-sm shadow-md cursor-pointer">
+                    Add My Contact Now
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- POST REQUEST MODAL -->
+    <div id="requestModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl relative">
+            <button onclick="closeRequestModal()" class="absolute top-6 right-6 text-gray-400 hover:text-gray-600 text-lg cursor-pointer">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="text-xl font-black text-gray-900 mb-1">Post a Service Request</h3>
+            <p class="text-gray-500 text-xs mb-6">Vendors will contact you on WhatsApp with quotes.</p>
+
+            <form id="requestForm" onsubmit="submitRequest(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">What do you need? (Title)</label>
+                    <input type="text" id="req-title" required placeholder="e.g. Braider needed for knotless braids today" class="w-full bg-gray-50 rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-indigo-600">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Category</label>
+                    <select id="req-category" required class="w-full bg-gray-50 rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-indigo-600">
+                        <option value="Beauty & Styling">Beauty & Hair</option>
+                        <option value="Graphic Design & Tech">Graphic Design & Tech</option>
+                        <option value="Food & Catering">Food & Catering</option>
+                        <option value="Academic Support">Academic Support</option>
+                        <option value="General Item / Product">General Product / Item</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Location</label>
+                    <input type="text" id="req-location" required placeholder="e.g. Ekpoma, Edo State" class="w-full bg-gray-50 rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-indigo-600">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Details / Budget</label>
+                    <textarea id="req-description" rows="2" required placeholder="Provide specifics or your budget range..." class="w-full bg-gray-50 rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-indigo-600"></textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Your Name</label>
+                    <input type="text" id="req-name" required placeholder="e.g. Sarah C." class="w-full bg-gray-50 rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-indigo-600">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">WhatsApp Phone Number</label>
+                    <input type="text" id="req-whatsapp" required placeholder="e.g. 2348012345678" class="w-full bg-gray-50 rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-indigo-600">
+                </div>
+                <button type="submit" id="req-submit-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-xl transition text-sm shadow-md cursor-pointer">
+                    Post Request Now
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- POST DEAL MODAL -->
+    <div id="dealModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl relative">
+            <button onclick="closeDealModal()" class="absolute top-6 right-6 text-gray-400 hover:text-gray-600 text-lg cursor-pointer">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <span class="bg-red-50 text-red-600 text-xs font-extrabold px-3 py-1 rounded-full uppercase">Vendor Feature</span>
+            <h3 class="text-xl font-black text-gray-900 mt-2 mb-1">Post a Discounted Deal</h3>
+            <p class="text-gray-500 text-xs mb-6">Promote limited-time offers to drive quick WhatsApp bookings.</p>
+
+            <form id="dealForm" onsubmit="submitDeal(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Business Name</label>
+                    <input type="text" id="deal-biz" required placeholder="e.g. Opulent Beauty & Strands" class="w-full bg-gray-50 rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-red-600">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Offer Title</label>
+                    <input type="text" id="deal-title" required placeholder="e.g. 20% Off All Braiding Services" class="w-full bg-gray-50 rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-red-600">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Discount Tag</label>
+                        <input type="text" id="deal-tag" required placeholder="e.g. 20% OFF" class="w-full bg-gray-50 rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-red-600">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Location</label>
+                        <input type="text" id="deal-location" required placeholder="e.g. Ekpoma" class="w-full bg-gray-50 rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-red-600">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Deal Details</label>
+                    <textarea id="deal-desc" rows="2" required placeholder="Briefly explain what clients get with this deal..." class="w-full bg-gray-50 rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-red-600"></textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">WhatsApp Phone Number</label>
+                    <input type="text" id="deal-whatsapp" required placeholder="e.g. 2348012345678" class="w-full bg-gray-50 rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-red-600">
+                </div>
+                <button type="submit" id="deal-submit-btn" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3.5 rounded-xl transition text-sm shadow-md cursor-pointer">
+                    Publish Deal Spotlight
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- VERIFICATION PROMPT MODAL -->
+    <div id="vendorOnlyModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl relative text-center">
+            <button onclick="closeVendorOnlyModal()" class="absolute top-6 right-6 text-gray-400 hover:text-gray-600 text-lg cursor-pointer">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                👑
+            </div>
+            
+            <span class="bg-indigo-50 text-indigo-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                Verified Feature Only
+            </span>
+            
+            <h3 class="text-2xl font-black text-gray-900 tracking-tight mt-3">Pitching Client Requests is Exclusive to Verified Vendors</h3>
+            
+            <p class="text-gray-600 text-sm mt-2 leading-relaxed">
+                To protect client quality and ensure high trust, only verified ₦10,000 tier vendors can pitch active leads on WhatsApp.
+            </p>
+
+            <div class="mt-6 space-y-3">
+                <button onclick="closeVendorOnlyModal(); openActivationModal();" class="w-full block bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold py-3.5 rounded-xl transition text-sm shadow-md cursor-pointer">
+                    🔑 Already Paid? Enter Pass Key
+                </button>
+                <a href="register.html" class="w-full block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-xl transition text-sm shadow-md">
+                    Get Verified Now (₦10,000)
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- VENDOR PASS ACTIVATION MODAL -->
+    <div id="activationModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl relative text-center">
+            <button onclick="closeActivationModal()" class="absolute top-6 right-6 text-gray-400 hover:text-gray-600 text-lg cursor-pointer">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="w-14 h-14 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl">
+                🔑
+            </div>
+
+            <h3 class="text-2xl font-black text-gray-900 tracking-tight">Activate Vendor Account</h3>
+            <p class="text-gray-500 text-xs mt-1 mb-6">Enter the 6-digit access pass key sent to you after your ₦10,000 verification payment.</p>
+
+            <form onsubmit="verifyPassKey(event)" class="space-y-4">
+                <div>
+                    <input type="text" id="passCodeInput" required placeholder="e.g. MP-10K-VIP" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 text-center font-mono font-bold text-lg tracking-widest text-indigo-900 focus:outline-none focus:border-indigo-600 uppercase">
+                </div>
+                <button type="submit" id="activateBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-xl transition text-sm shadow-md cursor-pointer">
+                    Verify & Unlock Pitching
+                </button>
+            </form>
+
+            <p class="text-xs text-gray-400 mt-4">
+                Haven't received a pass key? <a href="register.html" class="text-indigo-600 font-bold hover:underline">Get Verified Here</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- LEAVE REVIEW MODAL -->
+    <div id="reviewModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl relative">
+            <button onclick="closeReviewModal()" class="absolute top-6 right-6 text-gray-400 hover:text-gray-600 text-lg cursor-pointer">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <span class="bg-indigo-50 text-indigo-700 text-xs font-bold px-3 py-1 rounded-full uppercase">
+                Client Feedback
+            </span>
+            
+            <h3 class="text-2xl font-black text-gray-900 tracking-tight mt-2">Write a Review</h3>
+            <p id="reviewVendorName" class="text-indigo-600 text-xs font-bold mt-1 mb-4"></p>
+
+            <form id="reviewForm" onsubmit="submitReview(event)" class="space-y-4">
+                <input type="hidden" id="reviewVendorId">
+                
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Your Name</label>
+                    <input type="text" id="reviewerName" required placeholder="e.g. Daniel R." class="w-full bg-gray-50 rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-indigo-600">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Rating</label>
+                    <select id="reviewerRating" required class="w-full bg-gray-50 rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-indigo-600">
+                        <option value="5">⭐⭐⭐⭐⭐ (5/5) - Excellent</option>
+                        <option value="4">⭐⭐⭐⭐ (4/5) - Very Good</option>
+                        <option value="3">⭐⭐⭐ (3/5) - Average</option>
+                        <option value="2">⭐⭐ (2/5) - Poor</option>
+                        <option value="1">⭐ (1/5) - Terrible</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Your Review</label>
+                    <textarea id="reviewerComment" rows="3" required placeholder="Share your experience working with this vendor..." class="w-full bg-gray-50 rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-indigo-600"></textarea>
+                </div>
+
+                <button type="submit" id="reviewSubmitBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-xl transition text-sm shadow-md cursor-pointer">
+                    Submit Review
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-100 py-8 text-center text-gray-500 text-sm mt-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>&copy; 2026 MatchPoint. All rights reserved. Built for seamless connection.</p>
+        </div>
+    </footer>
+
+    <!-- Supabase JS Client CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- App Scripts -->
+    <script>
+        // Tab Switcher Function
+        function switchTab(tab) {
+            const vendorsSection = document.getElementById('section-vendors');
+            const communitySection = document.getElementById('section-community');
+            const btnVendors = document.getElementById('btn-vendors');
+            const btnCommunity = document.getElementById('btn-community');
+
+            if (tab === 'vendors') {
+                vendorsSection.classList.remove('hidden');
+                communitySection.classList.add('hidden');
+                btnVendors.className = "bg-white text-indigo-600 font-bold px-5 py-2.5 rounded-xl shadow-xs text-sm transition cursor-pointer";
+                btnCommunity.className = "text-gray-600 font-semibold px-5 py-2.5 rounded-xl text-sm transition hover:text-gray-900 cursor-pointer";
+            } else {
+                communitySection.classList.remove('hidden');
+                vendorsSection.classList.add('hidden');
+                btnCommunity.className = "bg-white text-emerald-600 font-bold px-5 py-2.5 rounded-xl shadow-xs text-sm transition cursor-pointer";
+                btnVendors.className = "text-gray-600 font-semibold px-5 py-2.5 rounded-xl text-sm transition hover:text-gray-900 cursor-pointer";
+            }
+        }
+
+        // Modal Controls
+        function openModal() { document.getElementById('contact-modal').classList.remove('hidden'); }
+        function closeModal() { document.getElementById('contact-modal').classList.add('hidden'); }
+
+        function openRequestModal() { document.getElementById('requestModal').classList.remove('hidden'); }
+        function closeRequestModal() { document.getElementById('requestModal').classList.add('hidden'); }
+
+        function openVendorOnlyModal() { document.getElementById('vendorOnlyModal').classList.remove('hidden'); }
+        function closeVendorOnlyModal() { document.getElementById('vendorOnlyModal').classList.add('hidden'); }
+
+        function openDealModal() { document.getElementById('dealModal').classList.remove('hidden'); }
+        function closeDealModal() { document.getElementById('dealModal').classList.add('hidden'); }
+
+        function openActivationModal() { document.getElementById('activationModal').classList.remove('hidden'); }
+        function closeActivationModal() { document.getElementById('activationModal').classList.add('hidden'); }
+
+        function openReviewModal(vendorId, vendorName) {
+            document.getElementById('reviewVendorId').value = vendorId;
+            document.getElementById('reviewVendorName').innerText = "For: " + vendorName;
+            document.getElementById('reviewModal').classList.remove('hidden');
+        }
+        function closeReviewModal() { document.getElementById('reviewModal').classList.add('hidden'); }
+
+        // Initialize Supabase Client
+        const SUPABASE_URL = 'https://hctekjktdgavgaowzcml.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjdGVramt0ZGdhdmdhb3d6Y21sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE1Nzc0OTIsImV4cCI6MjEwNzE1MzQ5Mn0.tZhRdpTnqNwYO9lQPds3JipgRdjRJssdsyHrzcYQJMI';
+        
+        let db = null;
+        try {
+            db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        } catch(e) {
+            console.error('Supabase init error:', e);
+        }
+
+        // Fetch and Display Verified Vendors with Ratings
+        async function loadVerifiedVendors() {
+            const grid = document.getElementById('verifiedVendorsGrid');
+            if (!grid || !db) return;
+
+            const { data: vendors, error } = await db
+                .from('verified_vendors')
+                .select(`
+                    *,
+                    vendor_reviews ( rating )
+                `)
+                .eq('status', 'verified')
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                console.error('Error fetching vendors:', error);
+                grid.innerHTML = '<p class="text-red-500 text-sm col-span-full text-center py-8">Failed to load verified vendors from database.</p>';
+                return;
+            }
+
+            if (vendors && vendors.length > 0) {
+                grid.innerHTML = '';
+                vendors.forEach(vendor => {
+                    const imageUrl = vendor.image_url || 'https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80&w=600';
+                    
+                    // Calculate Rating Statistics
+                    const reviews = vendor.vendor_reviews || [];
+                    const reviewCount = reviews.length;
+                    let avgRating = "5.0";
+                    if (reviewCount > 0) {
+                        const total = reviews.reduce((acc, curr) => acc + curr.rating, 0);
+                        avgRating = (total / reviewCount).toFixed(1);
+                    }
+
+                    const cardHTML = `
+                        <div class="group bg-white rounded-3xl shadow-xs border border-gray-100 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                            <div>
+                                <div class="h-48 w-full overflow-hidden bg-gray-100 relative">
+                                    <img src="${imageUrl}" alt="${vendor.business_name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                    <span class="absolute top-3 right-3 bg-indigo-600/95 backdrop-blur-md text-white text-[10px] font-extrabold px-3 py-1 rounded-full shadow-md flex items-center gap-1 border border-white/20">
+                                        ✓ Verified Vendor
+                                    </span>
+                                    <span class="absolute bottom-3 left-3 bg-black/70 backdrop-blur-md text-amber-300 text-[11px] font-extrabold px-3 py-1 rounded-full shadow-md flex items-center gap-1">
+                                        ⭐ ${avgRating} <span class="text-white/70 font-normal">(${reviewCount})</span>
+                                    </span>
+                                </div>
+                                <div class="p-6">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <span class="bg-indigo-50 text-indigo-700 text-xs font-bold px-3 py-1 rounded-full">${vendor.category || 'Vendor'}</span>
+                                        <span class="text-xs text-gray-400 font-medium">📍 ${vendor.location || 'N/A'}</span>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-gray-900 mb-1 tracking-tight">${vendor.business_name}</h3>
+                                    <p class="text-gray-600 text-sm line-clamp-3 mb-4 leading-relaxed">${vendor.description || 'Verified business offering top quality services.'}</p>
+                                    
+                                    <div class="flex flex-wrap gap-3 text-xs text-gray-500 mb-2">
+                                        ${vendor.instagram_handle ? `<span>IG: <b class="text-gray-700">${vendor.instagram_handle}</b></span>` : ''}
+                                        ${vendor.tiktok_handle ? `<span>TikTok: <b class="text-gray-700">${vendor.tiktok_handle}</b></span>` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-6 pt-0 space-y-2">
+                                <a href="https://wa.me/${(vendor.whatsapp_number || '').replace(/\D/g, '')}" target="_blank" class="w-full block text-center bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-xl transition-all shadow-sm text-sm cursor-pointer">
+                                    Chat on WhatsApp
+                                </a>
+                                <button onclick="openReviewModal('${vendor.id}', '${vendor.business_name.replace(/'/g, "\\'")}')" class="w-full text-center bg-gray-50 hover:bg-gray-100 text-gray-600 font-semibold py-2 rounded-xl transition text-xs border border-gray-200 cursor-pointer">
+                                    ⭐ Write Review
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    grid.innerHTML += cardHTML;
+                });
+            } else {
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-16 bg-white rounded-3xl border border-gray-100 shadow-xs">
+                        <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-3 text-lg font-bold">🌟</div>
+                        <p class="text-gray-800 font-bold text-base">No verified vendors available right now.</p>
+                        <p class="text-xs text-gray-400 mt-1">Approved businesses will appear here automatically!</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Fetch and Display Community Contacts
+        async function loadCommunityContacts() {
+            const gridContainer = document.getElementById('community-contacts-grid');
+            if (!gridContainer || !db) return;
+
+            const { data, error } = await db
+                .from('community_contacts')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                console.error('Error fetching contacts:', error);
+                gridContainer.innerHTML = '<p class="text-red-500 text-sm col-span-full text-center">Failed to load contacts from database.</p>';
+                return;
+            }
+
+            if (data && data.length > 0) {
+                gridContainer.innerHTML = '';
+                data.forEach(contact => {
+                    const contactName = contact.Name || contact.name || 'Anonymous';
+                    const contactRole = contact['Role/Skill'] || contact.RoleSkill || contact.role || 'Community Member';
+                    const contactPhone = contact['WhatsApp Number'] || contact.WhatsAppNumber || contact.whatsapp || '';
+
+                    const nameParts = contactName.trim().split(' ');
+                    const initials = (nameParts[0][0] + (nameParts[1] ? nameParts[1][0] : '')).toUpperCase();
+
+                    const cardHTML = `
+                        <div class="bg-white p-5 rounded-2xl shadow-xs border border-gray-100 flex items-center justify-between hover:shadow-md hover:-translate-y-0.5 transition-all">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-emerald-100 text-emerald-700 font-bold rounded-xl flex items-center justify-center text-lg">
+                                    ${initials}
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-900 text-sm">${contactName}</h4>
+                                    <p class="text-gray-400 text-xs">${contactRole}</p>
+                                    <span class="text-xs text-emerald-600 font-medium">Active Member</span>
+                                </div>
+                            </div>
+                            <a href="https://wa.me/${contactPhone.replace(/\D/g, '')}" target="_blank" class="bg-emerald-50 hover:bg-emerald-600 hover:text-white text-emerald-600 p-3 rounded-xl transition cursor-pointer">
+                                <i class="fa-brands fa-whatsapp text-lg"></i>
+                            </a>
+                        </div>
+                    `;
+                    gridContainer.innerHTML += cardHTML;
+                });
+            } else {
+                gridContainer.innerHTML = '<p class="text-gray-400 text-sm col-span-full text-center py-8">No community contacts yet. Be the first to join!</p>';
+            }
+        }
+
+        // Fetch and Render Requests
+        async function loadRequests() {
+            const requestsGrid = document.getElementById('requestsGrid');
+            const countSpan = document.getElementById('requestCount');
+            if (!requestsGrid || !db) return;
+
+            const { data: requests, error } = await db
+                .from('service_requests')
+                .select('*')
+                .eq('status', 'open')
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                console.error('Fetch requests error:', error);
+                requestsGrid.innerHTML = '<p class="text-indigo-200/60 text-xs col-span-full">Unable to load active requests.</p>';
+                if (countSpan) countSpan.innerText = '0';
+                return;
+            }
+
+            if (countSpan) {
+                countSpan.innerText = requests ? requests.length : 0;
+            }
+
+            const isVerifiedVendor = localStorage.getItem('matchpoint_vendor_verified') === 'true';
+
+            if (requests && requests.length > 0) {
+                requestsGrid.innerHTML = '';
+                requests.forEach(req => {
+                    const cleanPhone = (req.whatsapp_number || '').replace(/\D/g, '');
+                    const message = encodeURIComponent(`Hi ${req.requester_name}, I saw your MatchPoint request: "${req.title}". I am an Official Verified MatchPoint Vendor and I can help you with this!`);
+                    
+                    const actionButtonHTML = isVerifiedVendor ? `
+                        <a href="https://wa.me/${cleanPhone}?text=${message}" target="_blank" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs px-3 py-1.5 rounded-lg transition flex items-center gap-1 shadow-sm">
+                            <i class="fa-brands fa-whatsapp"></i> Offer Help
+                        </a>
+                    ` : `
+                        <button onclick="openVendorOnlyModal()" class="bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-xs px-3 py-1.5 rounded-lg transition flex items-center gap-1 shadow-sm cursor-pointer">
+                            <i class="fa-solid fa-lock text-[10px]"></i> Offer Help
+                        </button>
+                    `;
+
+                    const cardHTML = `
+                        <div class="bg-white/10 backdrop-blur-md border border-white/10 p-4 rounded-2xl flex flex-col justify-between hover:bg-white/15 transition">
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="bg-amber-400/20 text-amber-300 border border-amber-400/30 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase">
+                                        ${req.category}
+                                    </span>
+                                    <span class="text-[10px] text-indigo-200/70">📍 ${req.location}</span>
+                                </div>
+                                <h4 class="font-bold text-white text-sm line-clamp-1">${req.title}</h4>
+                                <p class="text-indigo-100/70 text-xs line-clamp-2 mt-1">${req.description}</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
+                                <span class="text-[11px] text-indigo-200 font-medium">By: ${req.requester_name}</span>
+                                ${actionButtonHTML}
+                            </div>
+                        </div>
+                    `;
+                    requestsGrid.innerHTML += cardHTML;
+                });
+            } else {
+                requestsGrid.innerHTML = `
+                    <div class="col-span-full py-6 text-center bg-white/5 rounded-2xl border border-white/10">
+                        <p class="text-indigo-200/70 text-xs font-medium">No open requests right now. Be the first to post!</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Fetch and Render Deals
+        async function loadDeals() {
+            const dealsGrid = document.getElementById('dealsGrid');
+            if (!dealsGrid || !db) return;
+
+            const { data: deals, error } = await db
+                .from('vendor_deals')
+                .select('*')
+                .eq('status', 'active')
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                console.error('Fetch deals error:', error);
+                dealsGrid.innerHTML = '<p class="text-red-500 text-xs col-span-full py-4 text-center">Failed to load deals.</p>';
+                return;
+            }
+
+            if (deals && deals.length > 0) {
+                dealsGrid.innerHTML = '';
+                deals.forEach(deal => {
+                    const cleanPhone = (deal.whatsapp_number || '').replace(/\D/g, '');
+                    const message = encodeURIComponent(`Hi ${deal.business_name}, I saw your MatchPoint Spotlight Deal: "${deal.deal_title}". I'd like to claim this offer!`);
+
+                    const cardHTML = `
+                        <div class="bg-gradient-to-br from-red-500/5 via-white to-amber-500/5 border border-red-100 rounded-3xl p-6 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden">
+                            <span class="absolute top-4 right-4 bg-red-600 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
+                                ${deal.discount_tag || 'PROMO'}
+                            </span>
+                            <div>
+                                <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">📍 ${deal.location || 'Edo State'}</span>
+                                <h3 class="text-lg font-black text-gray-900 mt-1 tracking-tight">${deal.deal_title}</h3>
+                                <p class="text-xs font-bold text-red-600 mb-2">By ${deal.business_name}</p>
+                                <p class="text-gray-600 text-xs line-clamp-3 leading-relaxed mb-4">${deal.description}</p>
+                            </div>
+                            <div>
+                                <a href="https://wa.me/${cleanPhone}?text=${message}" target="_blank" class="w-full block text-center bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-xl transition text-xs shadow-sm">
+                                    Claim Deal on WhatsApp
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                    dealsGrid.innerHTML += cardHTML;
+                });
+            } else {
+                dealsGrid.innerHTML = `
+                    <div class="col-span-full py-10 text-center bg-white rounded-3xl border border-gray-100 shadow-xs">
+                        <div class="w-12 h-12 bg-red-50 text-red-600 rounded-2xl flex items-center justify-center mx-auto mb-2 text-lg font-bold">🏷️</div>
+                        <p class="text-gray-800 font-bold text-sm">No active deals posted right now.</p>
+                        <p class="text-xs text-gray-400 mt-1">Verified vendors can click "Post A Deal" to showcase limited-time offers!</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Verify Pass Key Against Supabase
+        async function verifyPassKey(e) {
+            e.preventDefault();
+            const btn = document.getElementById('activateBtn');
+            const passInput = document.getElementById('passCodeInput').value.trim().toUpperCase();
+
+            btn.innerText = "Validating Key...";
+            btn.disabled = true;
+
+            const { data: pass, error } = await db
+                .from('vendor_passes')
+                .select('*')
+                .eq('pass_code', passInput)
+                .single();
+
+            if (error || !pass) {
+                alert("❌ Invalid Pass Key! Please check your code or contact support.");
+                btn.innerText = "Verify & Unlock Pitching";
+                btn.disabled = false;
+                return;
+            }
+
+            if (pass.is_redeemed) {
+                alert("⚠️ This Pass Key has already been used!");
+                btn.innerText = "Verify & Unlock Pitching";
+                btn.disabled = false;
+                return;
+            }
+
+            await db
+                .from('vendor_passes')
+                .update({ is_redeemed: true, redeemed_at: new Date().toISOString() })
+                .eq('id', pass.id);
+
+            localStorage.setItem('matchpoint_vendor_verified', 'true');
+
+            alert("🎉 Verification Successful! You can now pitch clients on the Noticeboard.");
+            closeActivationModal();
+            loadRequests();
+
+            btn.innerText = "Verify & Unlock Pitching";
+            btn.disabled = false;
+        }
+
+        // Submit Review to Supabase
+        async function submitReview(e) {
+            e.preventDefault();
+            const btn = document.getElementById('reviewSubmitBtn');
+            btn.innerText = "Submitting...";
+            btn.disabled = true;
+
+            const payload = {
+                vendor_id: parseInt(document.getElementById('reviewVendorId').value),
+                reviewer_name: document.getElementById('reviewerName').value,
+                rating: parseInt(document.getElementById('reviewerRating').value),
+                comment: document.getElementById('reviewerComment').value
+            };
+
+            const { error } = await db.from('vendor_reviews').insert([payload]);
+
+            if (error) {
+                alert("Error submitting review: " + error.message);
+            } else {
+                alert("Thank you! Your review has been submitted.");
+                closeReviewModal();
+                document.getElementById('reviewForm').reset();
+                loadVerifiedVendors();
+            }
+            btn.innerText = "Submit Review";
+            btn.disabled = false;
+        }
+
+        // Submit Contact
+        async function submitContact(event) {
+            event.preventDefault();
+            const submitBtn = document.getElementById('submit-btn');
+            submitBtn.innerText = "Submitting...";
+            submitBtn.disabled = true;
+
+            const name = document.getElementById('form-name').value;
+            const role = document.getElementById('form-role').value;
+            const whatsapp = document.getElementById('form-whatsapp').value;
+
+            const { error } = await db
+                .from('community_contacts')
+                .insert([
+                    { 
+                        "Name": name, 
+                        "Role/Skill": role, 
+                        "WhatsApp Number": whatsapp 
+                    }
+                ]);
+
+            if (error) {
+                alert('Error submitting contact: ' + error.message);
+                submitBtn.innerText = "Add My Contact Now";
+                submitBtn.disabled = false;
+            } else {
+                closeModal();
+                document.getElementById('add-contact-form').reset();
+                submitBtn.innerText = "Add My Contact Now";
+                submitBtn.disabled = false;
+                loadCommunityContacts();
+            }
+        }
+
+        // Submit Request
+        async function submitRequest(e) {
+            e.preventDefault();
+            const btn = document.getElementById('req-submit-btn');
+            btn.innerText = "Posting...";
+            btn.disabled = true;
+
+            const payload = {
+                title: document.getElementById('req-title').value,
+                category: document.getElementById('req-category').value,
+                location: document.getElementById('req-location').value,
+                description: document.getElementById('req-description').value,
+                requester_name: document.getElementById('req-name').value,
+                whatsapp_number: document.getElementById('req-whatsapp').value
+            };
+
+            const { error } = await db.from('service_requests').insert([payload]);
+
+            if (error) {
+                alert("Error posting request: " + error.message);
+            } else {
+                closeRequestModal();
+                document.getElementById('requestForm').reset();
+                loadRequests();
+            }
+            btn.innerText = "Post Request Now";
+            btn.disabled = false;
+        }
+
+        // Submit Deal
+        async function submitDeal(e) {
+            e.preventDefault();
+            const btn = document.getElementById('deal-submit-btn');
+            btn.innerText = "Publishing...";
+            btn.disabled = true;
+
+            const payload = {
+                business_name: document.getElementById('deal-biz').value,
+                deal_title: document.getElementById('deal-title').value,
+                discount_tag: document.getElementById('deal-tag').value,
+                location: document.getElementById('deal-location').value,
+                description: document.getElementById('deal-desc').value,
+                whatsapp_number: document.getElementById('deal-whatsapp').value,
+                category: 'General'
+            };
+
+            const { error } = await db.from('vendor_deals').insert([payload]);
+
+            if (error) {
+                alert("Error posting deal: " + error.message);
+            } else {
+                closeDealModal();
+                document.getElementById('dealForm').reset();
+                loadDeals();
+            }
+            btn.innerText = "Publish Deal Spotlight";
+            btn.disabled = false;
+        }
+
+        // Page Load Listener
+        window.addEventListener('DOMContentLoaded', () => {
+            loadVerifiedVendors();
+            loadCommunityContacts();
+            loadRequests();
+            loadDeals();
+        });
+    </script>
+
+    <!-- FLOATING WHATSAPP SUPPORT WIDGET -->
+<div class="fixed bottom-6 right-6 z-50 group">
+    <!-- Tooltip label on hover -->
+    <span class="absolute right-full mr-3 top-1/2 -translate-y-1/2 bg-slate-900 text-white text-xs font-bold px-3 py-1.5 rounded-xl shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap border border-slate-800">
+        💬 Chat with MatchPoint Admin
+    </span>
+    
+    <!-- Floating Button -->
+    <a href="https://wa.me/2347085890645?text=Hi%20MatchPoint%20Admin!%20I%20have%20a%20question%20about%20vendor%20verification%20and%20pass%20keys." target="_blank" rel="noopener noreferrer" class="bg-emerald-500 hover:bg-emerald-600 text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 flex items-center justify-center relative cursor-pointer">
+        <i class="fa-brands fa-whatsapp text-2xl"></i>
+        <!-- Glowing Pulse Indicator -->
+        <span class="absolute -top-1 -right-1 w-3.5 h-3.5 bg-amber-400 rounded-full border-2 border-white animate-ping"></span>
+        <span class="absolute -top-1 -right-1 w-3.5 h-3.5 bg-amber-400 rounded-full border-2 border-white"></span>
+    </a>
+</div>
+
+</body>

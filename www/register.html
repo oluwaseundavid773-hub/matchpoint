@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register as a Verified Vendor | MatchPoint</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Supabase JS Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col justify-between">
+
+  <!-- Navigation Bar -->
+  <nav class="bg-white shadow-sm border-b border-gray-200">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="browse.html" class="text-2xl font-bold text-indigo-600 tracking-tight">MatchPoint</a>
+      <a href="browse.html" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition">← Back to Browse</a>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <main class="max-w-2xl mx-auto px-4 py-10 flex-grow">
+    <div class="bg-white rounded-2xl shadow-xl p-6 sm:p-10 border border-gray-100">
+      
+      <!-- Header -->
+      <div class="mb-8 text-center">
+        <span class="inline-block bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full font-semibold mb-2">Elite Marketplace</span>
+        <h1 class="text-3xl font-extrabold text-gray-900">Become a Verified Vendor</h1>
+        <p class="text-gray-500 text-sm mt-2">Get featured on MatchPoint, gain buyer trust, and boost your sales.</p>
+      </div>
+
+      <!-- Registration Form -->
+      <form id="vendorForm" class="space-y-6">
+        
+        <!-- Business Name -->
+        <div>
+          <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Business Name *</label>
+          <input type="text" id="businessName" required placeholder="e.g. Opulent Beauty & Strands" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition">
+        </div>
+
+        <!-- Category & Location Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Category *</label>
+            <select id="category" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white transition">
+              <option value="" disabled selected>Select Category</option>
+              <option value="Beauty & Styling">Beauty & Hair</option>
+              <option value="Graphic Design & Tech">Graphic Design & Tech</option>
+              <option value="Food & Catering">Food & Catering</option>
+              <option value="Academic Support">Academic Support</option>
+              <option value="General Item / Product">General Product / Item</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Location *</label>
+            <input type="text" id="location" required placeholder="e.g. Ekpoma, Edo State" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition">
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div>
+          <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Business Description</label>
+          <textarea id="description" rows="3" placeholder="Describe your services, packages, and starting prices..." class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition"></textarea>
+        </div>
+
+        <!-- Image URL & WhatsApp -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Logo / Cover Image URL</label>
+            <input type="url" id="imageUrl" placeholder="https://example.com/logo.jpg" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition">
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-gray-700 uppercase mb-2">WhatsApp Number *</label>
+            <input type="tel" id="whatsappNumber" required placeholder="08169340204" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition">
+          </div>
+        </div>
+
+        <!-- Social Media Handles -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Instagram Handle</label>
+            <input type="text" id="instagramHandle" placeholder="@yourbrand" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition">
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-gray-700 uppercase mb-2">TikTok Handle</label>
+            <input type="text" id="tiktokHandle" placeholder="@yourbrand" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition">
+          </div>
+        </div>
+
+        <!-- VERIFICATION STEPS NOTICE BOX -->
+        <div class="bg-indigo-50/80 p-5 rounded-2xl border border-indigo-100 flex items-start gap-3">
+          <div class="text-indigo-600 text-xl font-bold mt-0.5">💬</div>
+          <div class="text-xs text-indigo-950 leading-relaxed">
+            <span class="font-black uppercase block text-[11px] text-indigo-700 mb-1">Next Step After Submitting:</span>
+            You will be redirected to MatchPoint Admin on WhatsApp to get the verification account details, complete your <b>₦10,000 verification payment</b>, and receive your <b>Pass Key</b>!
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" id="submitBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-xl shadow-lg transition duration-200 cursor-pointer flex items-center justify-center gap-2">
+          <span>Submit & Continue to WhatsApp</span>
+          <i class="fa-brands fa-whatsapp text-lg"></i>
+        </button>
+
+      </form>
+    </div>
+  </main>
+
+  <footer class="text-center py-6 text-xs text-gray-400">
+    © 2026 MatchPoint. All rights reserved.
+  </footer>
+
+  <!-- Supabase Logic -->
+  <script>
+    const SUPABASE_URL = 'https://hctekjktdgavgaowzcml.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjdGVramt0ZGdhdmdhb3d6Y21sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE1Nzc0OTIsImV4cCI6MjEwNzE1MzQ5Mn0.tZhRdpTnqNwYO9lQPds3JipgRdjRJssdsyHrzcYQJMI';
+    
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const form = document.getElementById('vendorForm');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      submitBtn.disabled = true;
+      submitBtn.innerText = 'Submitting Profile...';
+
+      const bizName = document.getElementById('businessName').value.trim();
+
+      const payload = {
+        business_name: bizName,
+        category: document.getElementById('category').value,
+        location: document.getElementById('location').value.trim(),
+        description: document.getElementById('description').value.trim(),
+        image_url: document.getElementById('imageUrl').value.trim(),
+        whatsapp_number: document.getElementById('whatsappNumber').value.trim(),
+        instagram_handle: document.getElementById('instagramHandle').value.trim(),
+        tiktok_handle: document.getElementById('tiktokHandle').value.trim(),
+        payment_ref: 'WhatsApp Pending',
+        status: 'pending'
+      };
+
+      const { data, error } = await supabaseClient
+        .from('verified_vendors')
+        .insert([payload]);
+
+      if (error) {
+        console.error('Supabase Insert Error:', error);
+        alert('Error submitting registration: ' + error.message);
+        submitBtn.disabled = false;
+        submitBtn.innerText = 'Submit & Continue to WhatsApp';
+            } else {
+        // Direct redirection to WhatsApp
+        const waMsg = encodeURIComponent(`Hi Admin! I just submitted my business profile "${bizName}" on MatchPoint. Please send me the account details for the ₦10,000 verification payment so I can get my Pass Key.`);
+        window.location.href = `https://wa.me/2347085890645?text=${waMsg}`;
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MatchPoint - Admin Pass Key Portal</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-950 text-gray-100 font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
+
+    <!-- Header Bar -->
+    <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <span class="text-2xl">👑</span>
+                <a href="index.html" class="text-xl font-black text-indigo-400 tracking-wider">MATCHPOINT <span class="text-xs bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-bold px-2 py-0.5 rounded-full uppercase">Admin Control</span></a>
+            </div>
+            <a href="browse.html" class="text-slate-400 hover:text-white text-xs font-semibold transition flex items-center gap-1">
+                <i class="fa-solid fa-arrow-left"></i> Back to Directory
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-4xl mx-auto px-4 py-12 w-full flex flex-col items-center justify-center">
+        
+        <!-- LOGIN PIN CONTAINER -->
+        <div id="loginSection" class="w-full max-w-md bg-slate-900 border border-slate-800 p-8 rounded-3xl shadow-2xl text-center">
+            <div class="w-14 h-14 bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 rounded-2xl flex items-center justify-center mx-auto mb-4 text-2xl">
+                🔒
+            </div>
+            <h2 class="text-2xl font-black text-white tracking-tight">Admin Passcode</h2>
+            <p class="text-slate-400 text-xs mt-1 mb-6">Enter your administrative master PIN to generate vendor verification keys.</p>
+
+            <form onsubmit="unlockAdmin(event)" class="space-y-4">
+                <div>
+                    <input type="password" id="adminPin" required placeholder="Enter Admin PIN" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-center font-mono font-bold text-lg text-white focus:outline-none focus:border-indigo-500 transition tracking-widest">
+                </div>
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3.5 rounded-xl transition text-sm shadow-lg cursor-pointer">
+                    Unlock Admin Control
+                </button>
+            </form>
+            <p class="text-[11px] text-slate-500 mt-4">Default PIN is <code class="text-indigo-400 font-bold">2026</code> (Changeable in script)</p>
+        </div>
+
+        <!-- GENERATOR DASHBOARD (Hidden until PIN unlocked) -->
+        <div id="dashboardSection" class="w-full max-w-2xl bg-slate-900 border border-slate-800 p-8 rounded-3xl shadow-2xl hidden">
+            <div class="flex items-center justify-between pb-6 border-b border-slate-800 mb-6">
+                <div>
+                    <span class="bg-amber-400/20 text-amber-300 border border-amber-400/30 text-[10px] font-extrabold px-3 py-1 rounded-full uppercase">
+                        ₦10,000 Verification Engine
+                    </span>
+                    <h2 class="text-2xl font-black text-white tracking-tight mt-2">Pass Key Generator</h2>
+                </div>
+                <button onclick="lockAdmin()" class="text-slate-500 hover:text-slate-300 text-xs font-semibold border border-slate-800 px-3 py-1.5 rounded-xl cursor-pointer">
+                    <i class="fa-solid fa-lock mr-1"></i> Lock Portal
+                </button>
+            </div>
+
+            <!-- Generator Controls -->
+            <form onsubmit="generatePassKey(event)" class="space-y-4 mb-8">
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Vendor Phone Number / Name (Optional Note)</label>
+                    <input type="text" id="vendorNote" placeholder="e.g. Opulent Beauty - 08012345678" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-indigo-500">
+                </div>
+                <button type="submit" id="genBtn" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold py-4 rounded-2xl transition text-sm shadow-xl flex items-center justify-center gap-2 cursor-pointer">
+                    <i class="fa-solid fa-key"></i> Generate & Store Pass Key
+                </button>
+            </form>
+
+            <!-- Generated Key Output Display -->
+            <div id="outputBox" class="hidden bg-slate-950 border border-slate-800 p-6 rounded-2xl space-y-4">
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">New Pass Key Created:</span>
+                    <span class="text-xs bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-extrabold px-2.5 py-0.5 rounded-full">Active in Supabase</span>
+                </div>
+                
+                <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl text-center">
+                    <span id="createdKey" class="font-mono font-black text-3xl text-amber-400 tracking-widest select-all"></span>
+                </div>
+
+                <div class="pt-2 flex flex-col sm:flex-row gap-3">
+                    <button onclick="copyPassCodeOnly()" id="copyKeyBtn" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5 cursor-pointer">
+                        <i class="fa-regular fa-copy"></i> Copy Code Only
+                    </button>
+                    <button onclick="copyWhatsAppReceipt()" id="copyReceiptBtn" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-extrabold py-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow-md cursor-pointer">
+                        <i class="fa-brands fa-whatsapp text-sm"></i> Copy WhatsApp Receipt Text
+                    </button>
+                </div>
+            </div>
+
+            <!-- Recent Active Keys List -->
+            <div class="mt-10 pt-6 border-t border-slate-800">
+                <div class="flex items-center justify-between mb-4">
+                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Recent Pass Keys</h4>
+                    <button onclick="loadRecentKeys()" class="text-indigo-400 text-xs font-semibold hover:underline cursor-pointer">Refresh List</button>
+                </div>
+                <div id="keysTable" class="space-y-2 text-xs">
+                    <p class="text-slate-500">Loading recent pass keys...</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-900 py-6 text-center text-slate-600 text-xs">
+        <p>&copy; 2026 MatchPoint Platform Administration.</p>
+    </footer>
+
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Script Logic -->
+    <script>
+        const MASTER_PIN = "2026"; // Change your admin passcode here if desired
+        const SUPABASE_URL = 'https://hctekjktdgavgaowzcml.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjdGVramt0ZGdhdmdhb3d6Y21sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE1Nzc0OTIsImV4cCI6MjEwNzE1MzQ5Mn0.tZhRdpTnqNwYO9lQPds3JipgRdjRJssdsyHrzcYQJMI';
+        
+        let db = null;
+        try {
+            db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        } catch(e) {
+            console.error('Supabase init error:', e);
+        }
+
+        let latestGeneratedCode = "";
+
+        // Unlock Admin
+        function unlockAdmin(e) {
+            e.preventDefault();
+            const pin = document.getElementById('adminPin').value;
+            if (pin === MASTER_PIN) {
+                document.getElementById('loginSection').classList.add('hidden');
+                document.getElementById('dashboardSection').classList.remove('hidden');
+                loadRecentKeys();
+            } else {
+                alert("❌ Incorrect Admin PIN!");
+            }
+        }
+
+        function lockAdmin() {
+            document.getElementById('dashboardSection').classList.add('hidden');
+            document.getElementById('loginSection').classList.remove('hidden');
+            document.getElementById('adminPin').value = "";
+        }
+
+        // Generate Random Pass Code Format (MP-XXXXXX)
+        function generateRandomCode() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let code = 'MP-';
+            for (let i = 0; i < 6; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return code;
+        }
+
+        // Generate Pass Key Function
+        async function generatePassKey(e) {
+            e.preventDefault();
+            const genBtn = document.getElementById('genBtn');
+            genBtn.innerText = "Generating & Storing...";
+            genBtn.disabled = true;
+
+            const vendorNote = document.getElementById('vendorNote').value || "Manual Issue";
+            const newCode = generateRandomCode();
+
+            const { data, error } = await db
+                .from('vendor_passes')
+                .insert([
+                    {
+                        pass_code: newCode,
+                        vendor_phone: vendorNote,
+                        is_redeemed: false
+                    }
+                ]);
+
+            if (error) {
+                alert("Error creating pass key: " + error.message);
+            } else {
+                latestGeneratedCode = newCode;
+                document.getElementById('createdKey').innerText = newCode;
+                document.getElementById('outputBox').classList.remove('hidden');
+                document.getElementById('vendorNote').value = "";
+                loadRecentKeys();
+            }
+
+            genBtn.innerHTML = '<i class="fa-solid fa-key"></i> Generate & Store Pass Key';
+            genBtn.disabled = false;
+        }
+
+        // Copy Code Only
+        function copyPassCodeOnly() {
+            navigator.clipboard.writeText(latestGeneratedCode).then(() => {
+                const btn = document.getElementById('copyKeyBtn');
+                btn.innerText = "Code Copied! ✅";
+                setTimeout(() => { btn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy Code Only'; }, 2000);
+            });
+        }
+
+        // Copy WhatsApp Receipt
+        function copyWhatsAppReceipt() {
+            const receiptText = `🎉 *MatchPoint ₦10,000 Vendor Verification Confirmed!*\n\nThank you for completing your verification. Here is your official Elite Access Pass Key:\n\n🔑 *Pass Key:* \`${latestGeneratedCode}\`\n\n*How to activate:*\n1. Visit MatchPoint (https://matchpoint.ng/browse.html)\n2. Click *"🔑 Enter Pass Key"* in the top navigation header.\n3. Paste code: *${latestGeneratedCode}*\n\nYour profile is now unlocked to offer help directly on active client requests! 🚀`;
+
+            navigator.clipboard.writeText(receiptText).then(() => {
+                const btn = document.getElementById('copyReceiptBtn');
+                btn.innerText = "WhatsApp Receipt Copied! ✅";
+                setTimeout(() => { btn.innerHTML = '<i class="fa-brands fa-whatsapp text-sm"></i> Copy WhatsApp Receipt Text'; }, 2000);
+            });
+        }
+
+        // Load Recent Keys from Supabase
+        async function loadRecentKeys() {
+            const table = document.getElementById('keysTable');
+            if (!table || !db) return;
+
+            const { data: keys, error } = await db
+                .from('vendor_passes')
+                .select('*')
+                .order('created_at', { ascending: false })
+                .limit(8);
+
+            if (error) {
+                table.innerHTML = '<p class="text-red-400">Failed to fetch keys.</p>';
+                return;
+            }
+
+            if (keys && keys.length > 0) {
+                table.innerHTML = '';
+                keys.forEach(k => {
+                    const statusBadge = k.is_redeemed 
+                        ? '<span class="text-slate-500 bg-slate-800 px-2 py-0.5 rounded-md font-mono text-[10px]">REDEEMED</span>'
+                        : '<span class="text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-md font-mono text-[10px]">ACTIVE</span>';
+
+                    const item = `
+                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <span class="font-mono font-bold text-amber-400 text-sm">${k.pass_code}</span>
+                                <span class="text-slate-400 text-[11px]">${k.vendor_phone || 'No note'}</span>
+                            </div>
+                            <div>
+                                ${statusBadge}
+                            </div>
+                        </div>
+                    `;
+                    table.innerHTML += item;
+                });
+            } else {
+                table.innerHTML = '<p class="text-slate-500">No pass keys found.</p>';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MatchPoint - Business Profile</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Navigation Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <a href="index.html" class="text-2xl font-black text-indigo-600 tracking-wider">MATCHPOINT</a>
+            </div>
+            <nav class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="index.html" class="text-gray-600 hover:text-indigo-600 transition">Home</a>
+                <a href="browse.html" class="text-gray-600 hover:text-indigo-600 transition">Browse</a>
+                <a href="register.html" class="text-gray-600 hover:text-indigo-600 transition">Register Business</a>
+                <a href="profile.html" class="text-indigo-600 font-semibold">Profile</a>
+            </nav>
+            <div>
+                <a href="register.html" class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-semibold shadow hover:bg-indigo-700 transition">Get Started</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+        
+        <!-- Profile Container -->
+        <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden mb-12 relative">
+            
+            <!-- Cover Photo Banner -->
+            <div class="h-48 sm:h-64 bg-cover bg-center relative" style="background-image: url('https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=80');">
+                <div class="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent"></div>
+            </div>
+
+            <!-- Profile Content Section -->
+            <div class="px-6 sm:px-10 pb-8 pt-16 sm:pt-6 relative">
+                
+                <!-- Logo Avatar Overlapping the Banner -->
+                <div class="absolute -top-16 sm:-top-20 left-6 sm:left-10 w-28 h-28 sm:w-32 sm:h-32 rounded-2xl bg-white p-1.5 shadow-xl border border-gray-100 z-20">
+                    <img src="e21d4f89-4db9-4ddb-90c0-79a0c84da3ea.jpg" alt="Business Logo" class="w-full h-full object-cover rounded-xl">
+                </div>
+
+                <!-- Header Row: Title & Action Buttons -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4 sm:pl-36">
+                    <!-- Business Title & Details -->
+                    <div>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <h1 class="text-2xl sm:text-3xl font-black text-gray-900">Opulent Beauty & Strands</h1>
+                            <span class="bg-indigo-50 text-indigo-600 text-xs font-bold px-2.5 py-1 rounded-full border border-indigo-100">Verified</span>
+                        </div>
+                        <p class="text-gray-500 text-sm flex items-center mt-1">
+                            <i class="fa-solid fa-location-dot text-gray-400 mr-1.5"></i> Ekpoma, Edo State &bull; 
+                            <span class="text-indigo-600 font-semibold ml-1.5">Beauty & Style</span>
+                        </p>
+                    </div>
+
+                    <!-- Action Buttons (WhatsApp, Instagram, TikTok) -->
+                    <div class="flex items-center flex-wrap gap-2">
+                        <a href="https://wa.me/" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-4 py-2.5 rounded-xl shadow transition text-sm flex items-center justify-center">
+                            <i class="fa-brands fa-whatsapp mr-2 text-base"></i> WhatsApp
+                        </a>
+                        <a href="https://instagram.com/" target="_blank" class="bg-pink-600 hover:bg-pink-700 text-white font-semibold px-4 py-2.5 rounded-xl shadow transition text-sm flex items-center justify-center">
+                            <i class="fa-brands fa-instagram mr-2 text-base"></i> Instagram
+                        </a>
+                        <a href="https://tiktok.com/" target="_blank" class="bg-gray-900 hover:bg-black text-white font-semibold px-4 py-2.5 rounded-xl shadow transition text-sm flex items-center justify-center">
+                            <i class="fa-brands fa-tiktok mr-2 text-base"></i> TikTok
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Divider -->
+                <hr class="border-gray-100 my-6">
+
+                <!-- About Section -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="md:col-span-2 space-y-4">
+                        <h3 class="text-lg font-bold text-gray-900">About the Business</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Welcome to Opulent Beauty & Strands, your premier destination for high-end hair styling, custom braiding, and luxury grooming packages in Ekpoma, Edo State. We pride ourselves on precision, elegance, and delivering outstanding client satisfaction with every appointment.
+                        </p>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Whether you are prepping for a special event or looking for regular professional hair maintenance, our expert stylists are dedicated to bringing out your absolute best look.
+                        </p>
+                    </div>
+
+                    <!-- Contact & Socials Sidebar -->
+                    <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100 space-y-4">
+                        <h4 class="font-bold text-gray-900 text-sm uppercase tracking-wider">Socials & Contact</h4>
+                        <div class="text-sm space-y-3 text-gray-600">
+                            <p class="flex items-center"><i class="fa-solid fa-phone text-indigo-600 w-6"></i> +234 815 219 6266</p>
+                            <p class="flex items-center"><i class="fa-brands fa-instagram text-pink-600 w-6 text-base"></i> @Zee_jol</p>
+                            <p class="flex items-center"><i class="fa-brands fa-tiktok text-gray-900 w-6 text-base"></i> @Opulent beauty and strands</p>
+                            <p class="flex items-center"><i class="fa-solid fa-clock text-indigo-600 w-6"></i> Mon - Sat: 9AM - 7PM</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-100 py-8 text-center text-gray-500 text-sm mt-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>&copy; 2026 MatchPoint. All rights reserved. Built for seamless connection.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
