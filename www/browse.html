@@ -168,10 +168,7 @@
                     <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Full Name</label>
                     <input type="text" id="form-name" required placeholder="e.g. John David" class="w-full bg-gray-50 rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-emerald-600 transition">
                 </div>
-                <div>
-                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Role / Skill</label>
-                    <input type="text" id="form-role" required placeholder="e.g. Student • Graphic Designer" class="w-full bg-gray-50 rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-emerald-600 transition">
-                </div>
+            
                 <div>
                     <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">WhatsApp Phone Number</label>
                     <input type="text" id="form-whatsapp" required placeholder="e.g. 2348012345678" class="w-full bg-gray-50 rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-emerald-600 transition">
@@ -529,55 +526,54 @@
             }
         }
 
-        // Fetch and Display Community Contacts
-        async function loadCommunityContacts() {
-            const gridContainer = document.getElementById('community-contacts-grid');
-            if (!gridContainer || !db) return;
+       // Fetch and Display Community Contacts
+async function loadCommunityContacts() {
+    const gridContainer = document.getElementById('community-contacts-grid');
+    if (!gridContainer || !db) return;
 
-            const { data, error } = await db
-                .from('community_contacts')
-                .select('*')
-                .order('created_at', { ascending: false });
+    const { data, error } = await db
+        .from('community_contacts')
+        .select('*')
+        .order('created_at', { ascending: false });
 
-            if (error) {
-                console.error('Error fetching contacts:', error);
-                gridContainer.innerHTML = '<p class="text-red-500 text-sm col-span-full text-center">Failed to load contacts from database.</p>';
-                return;
-            }
+    if (error) {
+        console.error('Error fetching contacts:', error);
+        gridContainer.innerHTML = '<p class="text-red-500 text-sm col-span-full text-center">Failed to load contacts from database.</p>';
+        return;
+    }
 
-            if (data && data.length > 0) {
-                gridContainer.innerHTML = '';
-                data.forEach(contact => {
-                    const contactName = contact.Name || contact.name || 'Anonymous';
-                    const contactRole = contact['Role/Skill'] || contact.RoleSkill || contact.role || 'Community Member';
-                    const contactPhone = contact['WhatsApp Number'] || contact.WhatsAppNumber || contact.whatsapp || '';
+    if (data && data.length > 0) {
+        gridContainer.innerHTML = '';
+        data.forEach(contact => {
+            const contactName = contact.Name || contact.name || 'Anonymous';
+            const contactPhone = contact['WhatsApp Number'] || contact.WhatsAppNumber || contact.whatsapp || '';
 
-                    const nameParts = contactName.trim().split(' ');
-                    const initials = (nameParts[0][0] + (nameParts[1] ? nameParts[1][0] : '')).toUpperCase();
+            const nameParts = contactName.trim().split(' ');
+            const initials = (nameParts[0][0] + (nameParts[1] ? nameParts[1][0] : '')).toUpperCase();
 
-                    const cardHTML = `
-                        <div class="bg-white p-5 rounded-2xl shadow-xs border border-gray-100 flex items-center justify-between hover:shadow-md hover:-translate-y-0.5 transition-all">
-                            <div class="flex items-center space-x-4">
-                                <div class="w-12 h-12 bg-emerald-100 text-emerald-700 font-bold rounded-xl flex items-center justify-center text-lg">
-                                    ${initials}
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-gray-900 text-sm">${contactName}</h4>
-                                    <p class="text-gray-400 text-xs">${contactRole}</p>
-                                    <span class="text-xs text-emerald-600 font-medium">Active Member</span>
-                                </div>
-                            </div>
-                            <a href="https://wa.me/${contactPhone.replace(/\D/g, '')}" target="_blank" class="bg-emerald-50 hover:bg-emerald-600 hover:text-white text-emerald-600 p-3 rounded-xl transition cursor-pointer">
-                                <i class="fa-brands fa-whatsapp text-lg"></i>
-                            </a>
+            const cardHTML = `
+                <div class="bg-white p-5 rounded-2xl shadow-xs border border-gray-100 flex items-center justify-between hover:shadow-md hover:-translate-y-0.5 transition-all">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-emerald-100 text-emerald-700 font-bold rounded-xl flex items-center justify-center text-lg">
+                            ${initials}
                         </div>
-                    `;
-                    gridContainer.innerHTML += cardHTML;
-                });
-            } else {
-                gridContainer.innerHTML = '<p class="text-gray-400 text-sm col-span-full text-center py-8">No community contacts yet. Be the first to join!</p>';
-            }
-        }
+                        <div>
+                            <h4 class="font-bold text-gray-900 text-sm">${contactName}</h4>
+                            <span class="text-xs text-emerald-600 font-medium">Active Member</span>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/${contactPhone.replace(/\D/g, '')}" target="_blank" class="bg-emerald-50 hover:bg-emerald-600 hover:text-white text-emerald-600 p-3 rounded-xl transition cursor-pointer">
+                        <i class="fa-brands fa-whatsapp text-lg"></i>
+                    </a>
+                </div>
+            `;
+            gridContainer.innerHTML += cardHTML;
+        });
+    } else {
+        gridContainer.innerHTML = '<p class="text-gray-400 text-sm col-span-full text-center py-8">No community contacts yet. Be the first to join!</p>';
+    }
+}
+
 
         // Fetch and Render Requests
         async function loadRequests() {
@@ -775,39 +771,37 @@
             btn.disabled = false;
         }
 
-        // Submit Contact
-        async function submitContact(event) {
-            event.preventDefault();
-            const submitBtn = document.getElementById('submit-btn');
-            submitBtn.innerText = "Submitting...";
-            submitBtn.disabled = true;
+       // Submit Contact
+async function submitContact(event) {
+    event.preventDefault();
+    const submitBtn = document.getElementById('submit-btn');
+    submitBtn.innerText = "Submitting...";
+    submitBtn.disabled = true;
 
-            const name = document.getElementById('form-name').value;
-            const role = document.getElementById('form-role').value;
-            const whatsapp = document.getElementById('form-whatsapp').value;
+    const name = document.getElementById('form-name').value;
+    const whatsapp = document.getElementById('form-whatsapp').value;
 
-            const { error } = await db
-                .from('community_contacts')
-                .insert([
-                    { 
-                        "Name": name, 
-                        "Role/Skill": role, 
-                        "WhatsApp Number": whatsapp 
-                    }
-                ]);
-
-            if (error) {
-                alert('Error submitting contact: ' + error.message);
-                submitBtn.innerText = "Add My Contact Now";
-                submitBtn.disabled = false;
-            } else {
-                closeModal();
-                document.getElementById('add-contact-form').reset();
-                submitBtn.innerText = "Add My Contact Now";
-                submitBtn.disabled = false;
-                loadCommunityContacts();
+    const { error } = await db
+        .from('community_contacts')
+        .insert([
+            { 
+                "Name": name, 
+                "WhatsApp Number": whatsapp 
             }
-        }
+        ]);
+
+    if (error) {
+        alert('Error submitting contact: ' + error.message);
+        submitBtn.innerText = "Add My Contact Now";
+        submitBtn.disabled = false;
+    } else {
+        closeModal();
+        document.getElementById('add-contact-form').reset();
+        submitBtn.innerText = "Add My Contact Now";
+        submitBtn.disabled = false;
+        loadCommunityContacts();
+    }
+}
 
         // Submit Request
         async function submitRequest(e) {
