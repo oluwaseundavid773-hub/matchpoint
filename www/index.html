@@ -11,6 +11,29 @@
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans antialiased min-h-screen flex flex-col">
 
+    <!-- MatchPoint Preloader -->
+<div id="preloader" class="fixed inset-0 z-[100] bg-white flex flex-col items-center justify-center transition-opacity duration-500">
+  <div class="flex flex-col items-center space-y-4">
+    
+    <!-- Animated Logo Icon -->
+    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-indigo-600 rounded-3xl flex items-center justify-center shadow-lg animate-pulse">
+    <img src="IMG_1299.JPG" alt="MatchPoint Logo"
+    class="w-16 h-16 sm:w-20 sm:h-20 object-contain animate-pulse">
+    </div>
+
+    <!-- Pulsing Title -->
+    <h2 class="text-xl sm:text-2xl font-black text-indigo-600 tracking-wider animate-pulse">
+      MATCHPOINT
+    </h2>
+
+    <!-- Loading Bar Indicator -->
+    <div class="w-24 h-1 bg-indigo-100 rounded-full overflow-hidden">
+      <div class="w-full h-full bg-indigo-600 rounded-full animate-ping"></div>
+    </div>
+
+  </div>
+</div>
+
     <!-- Main Header / Navigation -->
 <header class="bg-white border-b border-gray-100 sticky top-0 z-50">
   <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
