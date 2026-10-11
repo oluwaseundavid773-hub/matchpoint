@@ -11,25 +11,32 @@
 </head>
 <body class="bg-gray-50/50 text-gray-800 font-sans antialiased min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
 
-    <!-- Navigation Header -->
-    <header class="bg-white/80 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50 transition-all">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div class="flex items-center space-x-2">
-                <a href="index.html" class="text-2xl font-black text-indigo-600 tracking-wider">MATCHPOINT</a>
-            </div>
-            <nav class="hidden md:flex space-x-6 text-sm font-medium">
-                <a href="index.html" class="text-gray-600 hover:text-indigo-600 transition">Home</a>
-                <a href="browse.html" class="text-gray-600 hover:text-indigo-600 transition">Browse</a>
-                <a href="promote.html" class="text-gray-600 hover:text-indigo-600 transition">Promote</a>
-                <a href="share.html" class="text-indigo-600 font-semibold">Share & Earn</a>
-                <a href="register.html" class="text-gray-600 hover:text-indigo-600 transition">Register Business</a>
-                <a href="profile.html" class="text-gray-600 hover:text-indigo-600 transition">Profile</a>
-            </nav>
-            <div>
-                <a href="register.html" class="bg-indigo-600 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-sm hover:bg-indigo-700 transition">Get Started</a>
-            </div>
-        </div>
-    </header>
+   <!-- Navigation Header with Glassmorphism -->
+<header class="bg-white/80 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50 transition-all">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2">
+    
+    <!-- Logo -->
+    <div class="flex items-center space-x-2 shrink-0">
+      <a href="index.html" class="text-xl sm:text-2xl font-black text-indigo-600 tracking-wider">
+        MATCHPOINT
+      </a>
+    </div>
+
+    <!-- Navigation Links & Action Buttons -->
+    <div class="flex items-center space-x-2 sm:space-x-6 text-xs sm:text-sm font-medium">
+      <a href="index.html" class="text-gray-600 hover:text-indigo-600 transition">Home</a>
+      <a href="browse.html" class="text-gray-600 hover:text-indigo-600 transition">Browse</a>
+      <a href="promote.html" class="text-gray-600 hover:text-indigo-600 transition">Promote</a>
+      <a href="share.html" class="text-indigo-600 font-semibold transition">Share</a>
+
+      <!-- Enter Pass Key Button -->
+      <button onclick="openPassKeyModal()" class="bg-amber-400 hover:bg-amber-500 text-gray-900 text-xs sm:text-sm font-bold px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl shadow-sm transition flex items-center gap-1 cursor-pointer">
+        🔑 <span class="hidden xs:inline">Enter</span> Pass Key
+      </button>
+    </div>
+
+  </div>
+</header>
 
     <!-- Main Content -->
     <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
