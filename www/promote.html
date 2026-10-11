@@ -53,7 +53,7 @@
             </p>
             <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
                 <a href="register.html" class="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-8 py-4 rounded-2xl shadow-lg transition text-base">
-                    Become a Verified Vendor (₦10,000)
+                    Become a Verified Vendor (₦3,000)
                 </a>
                 <a href="browse.html" class="w-full sm:w-auto bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 font-bold px-8 py-4 rounded-2xl transition text-base">
                     View Live Marketplace
@@ -113,7 +113,7 @@
                     <div>
                         <span class="text-xs font-bold text-indigo-300 uppercase tracking-wider">Elite Verified Vendor</span>
                         <h3 class="text-2xl font-black text-white mt-1">Verified Marketplace</h3>
-                        <p class="text-4xl font-black text-amber-400 my-4">₦10,000 <span class="text-xs font-medium text-indigo-200">/ one-time verification</span></p>
+                        <p class="text-4xl font-black text-amber-400 my-4">₦3,000 <span class="text-xs font-medium text-indigo-200">/ one-time verification</span></p>
                         <ul class="space-y-3 text-sm text-indigo-100 mb-8">
                             <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-400"></i> Official Verified Vendor Badge</li>
                             <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-400"></i> High-resolution visual cover photo</li>
@@ -132,12 +132,76 @@
 
     </main>
 
+    <!-- Pass Key Modal -->
+    <div id="passKeyModal" class="fixed inset-0 z-[100] bg-gray-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4 transition-all duration-200">
+      <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-gray-100 relative transform transition-all">
+        
+        <!-- Close Button -->
+        <button onclick="closePassKeyModal()" type="button" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition p-2 cursor-pointer text-lg font-bold">
+          ✕
+        </button>
+
+        <!-- Modal Content -->
+        <div class="text-center mb-6">
+          <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3">
+            🔑
+          </div>
+          <h3 class="text-xl font-black text-gray-900">Enter Access Pass Key</h3>
+          <p class="text-gray-500 text-xs mt-1">Provide your vendor or admin key to unlock restricted directory features.</p>
+        </div>
+
+        <!-- Pass Key Form -->
+        <form onsubmit="handlePassKeySubmit(event)" class="space-y-4">
+          <div>
+            <label for="passKeyInput" class="block text-xs font-bold text-gray-700 mb-1 text-left">Pass Key</label>
+            <input 
+              type="password" 
+              id="passKeyInput" 
+              placeholder="Enter key here..." 
+              required 
+              class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-600 transition"
+            >
+          </div>
+
+          <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl transition shadow-md cursor-pointer text-sm">
+            Verify Key
+          </button>
+        </form>
+      </div>
+    </div>
+
     <!-- Footer -->
     <footer class="bg-white border-t border-gray-100 py-8 text-center text-gray-500 text-sm mt-12">
         <div class="max-w-7xl mx-auto px-4">
             <p>&copy; 2026 MatchPoint. All rights reserved. Built for seamless connection.</p>
         </div>
     </footer>
+
+    <!-- Pass Key Script Logic -->
+    <script>
+      function openPassKeyModal() {
+        const modal = document.getElementById('passKeyModal');
+        if (modal) {
+          modal.classList.remove('hidden');
+        }
+      }
+
+      function closePassKeyModal() {
+        const modal = document.getElementById('passKeyModal');
+        if (modal) {
+          modal.classList.add('hidden');
+        }
+      }
+
+      function handlePassKeySubmit(event) {
+        event.preventDefault();
+        const keyInput = document.getElementById('passKeyInput').value;
+        if (keyInput) {
+          alert('Pass Key accepted!');
+          closePassKeyModal();
+        }
+      }
+    </script>
 
 </body>
 </html>
