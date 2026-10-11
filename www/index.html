@@ -140,23 +140,20 @@
             <p>&copy; 2026 MatchPoint. All rights reserved. Built for seamless connection.</p>
         </div>
     </footer>
-<script>
+  <script>
   // Function to smoothly hide preloader
   function hidePreloader() {
     const preloader = document.getElementById('preloader');
-    if (preloader) {
+    if (preloader && !preloader.classList.contains('opacity-0')) {
       preloader.classList.add('opacity-0', 'pointer-events-none');
       setTimeout(() => {
         preloader.remove();
-      }, 500);
+      }, 500); // 0.5s fade out animation
     }
   }
 
-  // Hide on load
-  window.addEventListener('load', hidePreloader);
-
-  // Safety Fallback: Force hide preloader after 2 seconds no matter what
-  setTimeout(hidePreloader, 2000);
+  // Hold the preloader for 5 seconds (5000ms) before fading out
+  setTimeout(hidePreloader, 5000);
 </script>
 </body>
 </html>
