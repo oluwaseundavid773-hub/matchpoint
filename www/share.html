@@ -60,18 +60,86 @@
             </div>
         </div>
 
-        <!-- Quick Copy Link Generator -->
-        <div class="max-w-2xl mx-auto bg-white border border-gray-100 p-8 rounded-3xl shadow-sm mb-12">
-            <h3 class="text-xl font-black text-gray-900 mb-2">Copy MatchPoint Invite Link</h3>
-            <p class="text-gray-500 text-xs mb-4">Paste this link into your statuses, broadcast messages, or social posts.</p>
+         <!-- Quick Copy Link Generator -->
+  <div class="max-w-2xl mx-auto bg-white border border-gray-100 p-6 sm:p-8 rounded-3xl shadow-sm mb-12">
+    <h3 class="text-xl font-black text-gray-900 mb-2">Copy MatchPoint Invite Link</h3>
+    <p class="text-gray-500 text-xs mb-4">Paste this link into your statuses, broadcast messages, or social posts.</p>
+
+    <!-- Link Input & Copy Button -->
+    <div class="flex items-center gap-2 bg-gray-50 border border-gray-200 p-2 rounded-2xl mb-4">
+      <input type="text" id="shareUrl" readonly class="bg-transparent w-full text-xs sm:text-sm font-mono px-2 focus:outline-none text-gray-700">
+      <button onclick="copyShareLink()" id="copyBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-bold px-4 py-2 rounded-xl transition cursor-pointer shrink-0">
+        Copy Link
+      </button>
+    </div>
+
+    <!-- Description Box -->
+    <div class="bg-indigo-50/50 border border-indigo-100 rounded-2xl p-4 text-xs sm:text-sm text-gray-700 leading-relaxed">
+      <p class="font-bold text-indigo-900 mb-1">📌 What is MatchPoint?</p>
+      <p id="shareDescription">
+        MatchPoint is the ultimate business directory & instant marketplace. Connect directly with verified vendors, skilled artisans, and community requests on WhatsApp!
+      </p>
+    </div>
+  </div>
+
+  <!-- WhatsApp Share Button Trigger -->
+  <div class="text-center mb-12">
+    <button onclick="shareToWhatsApp()" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-6 py-3 rounded-2xl shadow-md transition inline-flex items-center gap-2 cursor-pointer">
+      <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
+      </svg>
+      Share to WhatsApp Status / Groups
+    </button>
+  </div>
+
+  <!-- Inline JavaScript directly before closing body -->
+  <script>
+    // Automatically set current domain on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      const shareInput = document.getElementById('shareUrl');
+      if (shareInput) {
+        shareInput.value = window.location.origin;
+      }
+    });
+
+    // Copy link functionality
+    function copyShareLink() {
+      const shareInput = document.getElementById('shareUrl');
+      if (shareInput) {
+        shareInput.select();
+        shareInput.setSelectionRange(0, 99999);
+        
+        navigator.clipboard.writeText(shareInput.value).then(() => {
+          const btn = document.getElementById('copyBtn');
+          if (btn) {
+            const originalText = btn.innerText;
+            btn.innerText = 'Copied! ✅';
+            btn.classList.replace('bg-indigo-600', 'bg-emerald-600');
             
-            <div class="flex items-center gap-2 bg-gray-50 border border-gray-200 p-2 rounded-2xl">
-                <input type="text" id="shareUrl" readonly value="https://matchpoint.ng" class="bg-transparent text-sm font-semibold text-gray-700 px-3 w-full focus:outline-none">
-                <button onclick="copyShareLink()" id="copyBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-5 py-3 rounded-xl transition flex-shrink-0 cursor-pointer">
-                    Copy Link
-                </button>
-            </div>
-        </div>
+            setTimeout(() => {
+              btn.innerText = originalText;
+              btn.classList.replace('bg-emerald-600', 'bg-indigo-600');
+            }, 2000);
+          }
+        }).catch(err => {
+          console.error('Copy failed:', err);
+        });
+      }
+    }
+
+    // Share full formatted description + link to WhatsApp
+    function shareToWhatsApp() {
+      const currentUrl = window.location.origin;
+      const shareText = `🚀 *Discover MatchPoint*\n\nThe ultimate business directory & instant marketplace! Connect directly with verified vendors, local artisans, and community service requests.\n\n👉 Join & Explore here:\n${currentUrl}`;
+      
+      const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
+      window.open(whatsappUrl, '_blank');
+    }
+  </script>
+
+</body>
+</html>
+
 
         <!-- Pre-written WhatsApp Templates -->
         <div class="max-w-4xl mx-auto mb-12">
@@ -151,5 +219,40 @@
             });
         }
     </script>
+
+    <script>
+  // Populate current domain automatically on load
+  document.addEventListener('DOMContentLoaded', () => {
+    const shareInput = document.getElementById('shareUrl');
+    if (shareInput) {
+      shareInput.value = window.location.origin;
+    }
+  });
+
+  // Copy Link Functionality
+  function copyShareLink() {
+    const shareInput = document.getElementById('shareUrl');
+    if (shareInput) {
+      shareInput.select();
+      shareInput.setSelectionRange(0, 99999); // For mobile compatibility
+      
+      navigator.clipboard.writeText(shareInput.value).then(() => {
+        const btn = document.getElementById('copyBtn');
+        if (btn) {
+          const originalText = btn.innerText;
+          btn.innerText = 'Copied! ✅';
+          btn.classList.replace('bg-indigo-600', 'bg-emerald-600');
+          
+          setTimeout(() => {
+            btn.innerText = originalText;
+            btn.classList.replace('bg-emerald-600', 'bg-indigo-600');
+          }, 2000);
+        }
+      }).catch(err => {
+        console.error('Copy failed:', err);
+      });
+    }
+  }
+</script>
 </body>
 </html>
