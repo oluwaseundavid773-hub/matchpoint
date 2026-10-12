@@ -17,7 +17,7 @@
     
     <!-- Logo -->
     <div class="flex items-center space-x-2 shrink-0">
-      <a href="index.html" class="text-xl sm:text-2xl font-black text-indigo-600 tracking-wider">
+      <a href="index.html" class="text-xl sm:text-2xl font-black text-amber-500 tracking-wider">
         MATCHPOINT
       </a>
     </div>
@@ -84,11 +84,25 @@
           <textarea id="description" rows="3" placeholder="Describe your services, packages, and starting prices..." class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition"></textarea>
         </div>
 
-        <!-- Image URL & WhatsApp -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Logo / Cover Image URL</label>
-            <input type="url" id="imageUrl" placeholder="https://example.com/logo.jpg" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition">
+        <!-- LOGO / COVER IMAGE FILE UPLOAD -->
+<div>
+    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
+        Logo / Cover Image
+    </label>
+    <div class="relative border-2 border-dashed border-gray-200 rounded-2xl p-4 bg-gray-50 hover:bg-gray-100 transition text-center cursor-pointer group">
+        <input 
+            type="file" 
+            id="logo-file-input" 
+            accept="image/*" 
+            onchange="previewImage(event)" 
+            class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+        >
+        
+        <!-- Default Upload UI -->
+        <div id="upload-placeholder" class="space-y-1">
+            <i class="fa-solid fa-cloud-arrow-up text-indigo-600 tex-2xl group-hover:scale-110 transition duration-200"></i>
+            <p class="text-xs font-bold text-gray-700">Click to upload brand photo</p>
+            <p class="text-[10px] text-gray-400">PNG,JPG,JPEG or WEBP (Max 2MB)</p>
           </div>
 
           <div>
@@ -96,6 +110,20 @@
             <input type="tel" id="whatsappNumber" required placeholder="08169340204" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition">
           </div>
         </div>
+
+        <!-- LOGO / COVER IMAGE FILE UPLOAD -->
+<div>
+    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
+        Logo / Cover Image
+    </label>
+    <div class="relative border-2 border-dashed border-gray-200 rounded-2xl p-4 bg-gray-50 hover:bg-gray-100 transition text-center cursor-pointer group">
+        <input 
+            type="file" 
+            id="logo-file-input" 
+            accept="image/*" 
+            onchange="previewImage(event)" 
+            class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+        >
 
         <!-- Social Media Handles -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -115,7 +143,7 @@
           <div class="text-indigo-600 text-xl font-bold mt-0.5">💬</div>
           <div class="text-xs text-indigo-950 leading-relaxed">
             <span class="font-black uppercase block text-[11px] text-indigo-700 mb-1">Next Step After Submitting:</span>
-            You will be redirected to MatchPoint Admin on WhatsApp to get the verification account details, complete your <b>₦10,000 verification payment</b>, and receive your <b>Pass Key</b>!
+            You will be redirected to MatchPoint Admin on WhatsApp to get the verification account details, complete your <b>₦3,000 verification payment</b>, and receive your <b>Pass Key</b>!
           </div>
         </div>
 

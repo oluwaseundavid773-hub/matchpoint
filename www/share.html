@@ -11,26 +11,27 @@
 </head>
 <body class="bg-gray-50/50 text-gray-800 font-sans antialiased min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
 
-  <!-- Navigation Header with Glassmorphism -->
+  <!-- Navigation Header with Mobile Optimization -->
   <header class="bg-white/80 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50 transition-all">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2">
+    <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-1">
       
-      <!-- Logo -->
-      <div class="flex items-center space-x-2 shrink-0">
-        <a href="index.html" class="text-xl sm:text-2xl font-black text-indigo-600 tracking-wider">
+      <!-- Logo (Yellow) -->
+      <div class="flex items-center shrink-0">
+        <a href="index.html" class="text-base sm:text-2xl font-black text-amber-500 tracking-wider">
           MATCHPOINT
         </a>
       </div>
 
       <!-- Navigation Links & Action Buttons -->
-      <div class="flex items-center space-x-2 sm:space-x-6 text-xs sm:text-sm font-medium">
-        <a href="index.html" class="text-gray-600 hover:text-indigo-600 transition">Home</a>
-        <a href="browse.html" class="text-gray-600 hover:text-indigo-600 transition">Browse</a>
-        <a href="promote.html" class="text-gray-600 hover:text-indigo-600 transition">Promote</a>
-        <a href="share.html" class="text-indigo-600 font-semibold transition">Share</a>
+      <div class="flex items-center space-x-1.5 sm:space-x-4 text-[11px] sm:text-sm font-medium">
+        <a href="index.html" class="text-gray-600 hover:text-amber-500 transition">Home</a>
+        <a href="browse.html" class="text-gray-600 hover:text-amber-500 transition">Browse</a>
+        <a href="promote.html" class="text-gray-600 hover:text-amber-500 transition">Promote</a>
+        <a href="profile.html" class="text-gray-600 hover:text-amber-500 transition">Profile</a>
+        <a href="share.html" class="text-amber-500 font-semibold transition">Share</a>
 
         <!-- Enter Pass Key Button -->
-        <button onclick="openPassKeyModal()" type="button" class="bg-amber-400 hover:bg-amber-500 text-gray-900 text-xs sm:text-sm font-bold px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl shadow-sm transition flex items-center gap-1 cursor-pointer shrink-0">
+        <button onclick="openPassKeyModal()" type="button" class="bg-amber-400 hover:bg-amber-500 text-gray-900 text-[10px] sm:text-sm font-bold px-2 py-1 sm:px-4 sm:py-2 rounded-xl shadow-sm transition flex items-center gap-1 cursor-pointer shrink-0">
           🔑 <span class="hidden xs:inline">Enter</span> Pass Key
         </button>
       </div>
@@ -73,11 +74,12 @@
           </button>
         </div>
 
-        <!-- Description Box -->
+        <!-- Description Box (Option 2) -->
         <div class="bg-indigo-50/50 border border-indigo-100 rounded-2xl p-4 text-xs sm:text-sm text-gray-700 leading-relaxed">
           <p class="font-bold text-indigo-900 mb-1">📌 What is MatchPoint?</p>
           <p id="shareDescription">
-            MatchPoint is the ultimate business directory & instant marketplace. Connect directly with verified vendors, skilled artisans, and community requests on WhatsApp!
+            🔥 <strong>Grow Your Business or Find Services Fast Across Nigeria!</strong><br>
+            Whether you want to list your business, gain direct WhatsApp leads, or hire a trusted local expert in minutes, MatchPoint makes it seamless.
           </p>
         </div>
       </div>
@@ -166,7 +168,6 @@
 
   <!-- Unified App Logic Scripts -->
   <script>
-    // Automatically set active Vercel domain across input boxes and templates
     document.addEventListener('DOMContentLoaded', () => {
       const activeUrl = window.location.origin;
       
@@ -180,7 +181,6 @@
       });
     });
 
-    // Copy Invite Link
     function copyShareLink() {
       const shareInput = document.getElementById('shareUrl');
       if (shareInput) {
@@ -205,46 +205,57 @@
       }
     }
 
-    // Share full formatted message to WhatsApp
     function shareToWhatsApp() {
       const currentUrl = window.location.origin;
-      const shareText = `🚀 *Discover MatchPoint*\n\nAre you looking for a place where you can promote your services, Gain contact all over Nigeria. Are you in need of a quick service provider. Join matchpoint today to get your services across various leads in Nigeria\n\n👉 Join & Explore here:\n${currentUrl}`;
+      const shareText = `🔥 *Grow Your Business or Find Services Fast Across Nigeria!*\nWhether you want to list your business, gain direct WhatsApp leads, or hire a trusted local expert in minutes, *MatchPoint* makes it seamless.\n\n📲 Join the marketplace today:\n${currentUrl}`;
       
       const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
       window.open(whatsappUrl, '_blank');
     }
 
-    // Copy Vendor Promo Template
     function copyVendorTemplate() {
       const currentUrl = window.location.origin;
-      const text = `Hey! If you offer services or run a business, get listed on MatchPoint so clients can find you and chat with you directly on WhatsApp! 🚀 Check it out: ${currentUrl}`;
-      navigator.clipboard.writeText(text).then(() => {
-        alert("Vendor promo message copied to clipboard! Paste it on WhatsApp or social media.");
-      });
+      const message = `Hey! If you offer services or run a business, get listed on MatchPoint so clients can find you and chat with you directly on WhatsApp! 🚀 Check it out: ${currentUrl}`;
+      copyText(message);
     }
 
-    // Copy Client Promo Template
     function copyClientTemplate() {
       const currentUrl = window.location.origin;
-      const text = `Need a braider, tech expert, or caterer near you? Or have a request? Post on MatchPoint and verified experts will message you instantly! 🔥 Check it out: ${currentUrl}`;
-      navigator.clipboard.writeText(text).then(() => {
-        alert("Client promo message copied to clipboard! Paste it on WhatsApp or social media.");
-      });
+      const message = `Need a braider, tech expert, or caterer near you? Or have a request? Post on MatchPoint and verified experts will message you instantly! 🔥 Check it out: ${currentUrl}`;
+      copyText(message);
     }
 
-    // Pass Key Modal Controls
-    function openPassKeyModal() {
-      const modal = document.getElementById('passKeyModal');
-      if (modal) {
-        modal.classList.remove('hidden');
+    function copyText(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => {
+          alert("Copied to clipboard successfully!");
+        }).catch(err => console.error('Copy failed:', err));
+        return;
       }
+
+      const temporaryInput = document.createElement('textarea');
+      temporaryInput.value = text;
+      temporaryInput.setAttribute('readonly', '');
+      temporaryInput.style.position = 'absolute';
+      temporaryInput.style.left = '-9999px';
+      document.body.appendChild(temporaryInput);
+      temporaryInput.select();
+      try {
+        document.execCommand('copy');
+        alert("Copied to clipboard successfully!");
+      } catch (err) {
+        console.error('Copy failed:', err);
+      } finally {
+        temporaryInput.remove();
+      }
+    }
+
+    function openPassKeyModal() {
+      document.getElementById('passKeyModal')?.classList.remove('hidden');
     }
 
     function closePassKeyModal() {
-      const modal = document.getElementById('passKeyModal');
-      if (modal) {
-        modal.classList.add('hidden');
-      }
+      document.getElementById('passKeyModal')?.classList.add('hidden');
     }
 
     function handlePassKeySubmit(event) {
@@ -256,6 +267,5 @@
       }
     }
   </script>
-
 </body>
 </html>
